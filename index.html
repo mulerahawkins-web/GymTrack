@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GymTrack - Exercise Log</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon">🏋🏾</span>
+          <div>
+            <h1>GymTrack</h1>
+            <p>Exercise Library & Workout Logger</p>
+          </div>
+        </div>
+        <button class="history-btn" onclick="openHistory()">📋 History</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Search + Filters -->
+      <section class="search-section card">
+        <input
+          type="text"
+          id="exerciseSearch"
+          placeholder="Search exercises... e.g. bench press, squat"
+          autocomplete="off"
+        />
+        <div class="category-filters" id="categoryFilters"></div>
+        <div class="equipment-filters" id="equipmentFilters"></div>
+      </section>
+
+      <!-- Loading State -->
+      <div class="loading-state" id="loadingState">
+        <div class="spinner"></div>
+        <p>Loading 1,324 exercises...</p>
+      </div>
+
+      <!-- Exercise Grid -->
+      <div class="exercise-grid" id="exerciseGrid"></div>
+
+      <!-- Load More -->
+      <button
+        class="load-more-btn"
+        id="loadMoreBtn"
+        onclick="loadMore()"
+        style="display: none"
+      >
+        Load More Exercises
+      </button>
+
+      <!-- Empty State -->
+      <p class="empty-state" id="emptyState" style="display: none">
+        No exercises found — try a different search or filter.
+      </p>
+    </main>
+
+    <!-- Exercise Detail Modal -->
+    <div
+      class="modal-overlay"
+      id="detailOverlay"
+      onclick="handleDetailOverlayClick(event)"
+    >
+      <div class="modal detail-modal">
+        <button class="close-modal-btn" onclick="closeDetail()">✕</button>
+        <img id="detailGif" class="detail-gif" src="" alt="" />
+        <h2 id="detailName"></h2>
+        <div class="detail-tags">
+          <span class="tag" id="detailCategory"></span>
+          <span class="tag" id="detailEquipment"></span>
+          <span class="tag" id="detailTarget"></span>
+        </div>
+        <h3>Instructions</h3>
+        <p id="detailInstructions"></p>
+        <p class="attribution">Media © Gym visual — gymvisual.com</p>
+        <button class="log-btn" onclick="openLogForm()">
+          + Log This Exercise
+        </button>
+      </div>
+    </div>
+
+    <!-- Log Set Modal -->
+    <div
+      class="modal-overlay"
+      id="logOverlay"
+      onclick="handleLogOverlayClick(event)"
+    >
+      <div class="modal log-modal">
+        <h2>📝 Log <span id="logExerciseName"></span></h2>
+        <div class="log-row">
+          <div class="input-group">
+            <label>Weight (kg)</label>
+            <input
+              type="number"
+              id="logWeight"
+              placeholder="e.g. 40"
+              min="0"
+              step="0.5"
+            />
+          </div>
+          <div class="input-group">
+            <label>Reps</label>
+            <input type="number" id="logReps" placeholder="e.g. 10" min="1" />
+          </div>
+          <div class="input-group">
+            <label>Sets</label>
+            <input
+              type="number"
+              id="logSets"
+              placeholder="e.g. 3"
+              min="1"
+              value="1"
+            />
+          </div>
+        </div>
+        <button class="save-log-btn" onclick="saveExerciseLog()">
+          💾 Add to Today's Workout
+        </button>
+      </div>
+    </div>
+
+    <!-- Today's Workout -->
+    <section class="today-log card" id="todayLogSection">
+      <div class="log-header">
+        <h2>💪🏾 Today's Workout</h2>
+        <button class="clear-btn" onclick="clearTodayLog()">Clear All</button>
+      </div>
+      <div id="todayLogList">
+        <p class="empty-log">
+          No exercises logged yet — browse above to get started!
+        </p>
+      </div>
+    </section>
+
+    <!-- Workout History Modal -->
+    <div
+      class="modal-overlay"
+      id="historyOverlay"
+      onclick="handleHistoryOverlayClick(event)"
+    >
+      <div class="modal history-modal">
+        <h2>📋 Workout History</h2>
+        <div id="historyList"></div>
+      </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <footer>
+      <p>GymTrack 🏋🏾</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
