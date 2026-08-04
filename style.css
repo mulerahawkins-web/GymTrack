@@ -98,9 +98,9 @@ main {
 
 /* Search */
 .search-section {
-  max-width: 640px;
-  margin-left: auto;
-  margin-right: auto;
+  max-width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 #exerciseSearch {
