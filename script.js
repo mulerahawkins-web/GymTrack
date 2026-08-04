@@ -70,40 +70,44 @@ async function loadExercises() {
 // FILTERS
 // ==============================
 function renderCategoryFilters() {
-  const categories = ["All", ...new Set(allExercises.map((e) => e.category))];
-  document.getElementById("categoryFilters").innerHTML = categories
+  const categories = [
+    "All",
+    ...new Set(allExercises.map((e) => e.category)),
+  ].sort();
+  const select = document.getElementById("categorySelect");
+  select.innerHTML = categories
     .map(
-      (cat) => `
-        <button class="filter-chip ${cat === selectedCategory ? "active" : ""}"
-                onclick="setCategory('${cat}', event)">${cat}</button>
-    `,
+      (cat) =>
+        `<option value="${cat}" ${cat === selectedCategory ? "selected" : ""}>
+            ${cat === "All" ? "All Muscle Groups" : cat}
+        </option>`,
     )
     .join("");
 }
 
 function renderEquipmentFilters() {
-  const equipment = ["All", ...new Set(allExercises.map((e) => e.equipment))];
-  document.getElementById("equipmentFilters").innerHTML = equipment
+  const equipment = [
+    "All",
+    ...new Set(allExercises.map((e) => e.equipment)),
+  ].sort();
+  const select = document.getElementById("equipmentSelect");
+  select.innerHTML = equipment
     .map(
-      (eq) => `
-        <button class="filter-chip ${eq === selectedEquipment ? "active" : ""}"
-                onclick="setEquipment('${eq}', event)">${eq}</button>
-    `,
+      (eq) =>
+        `<option value="${eq}" ${eq === selectedEquipment ? "selected" : ""}>
+            ${eq === "All" ? "All Equipment" : eq}
+        </option>`,
     )
     .join("");
 }
 
-function setCategory(cat, event) {
-  if (event) event.stopPropagation();
+function setCategory(cat) {
   selectedCategory = cat;
-  renderCategoryFilters();
   applyFilters();
 }
 
-function setEquipment(eq, event) {
-  if (event) event.stopPropagation();
+function setEquipment(eq) {
   selectedEquipment = eq;
-  renderEquipmentFilters();
   applyFilters();
 }
 

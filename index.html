@@ -29,8 +29,14 @@
           placeholder="Search exercises... e.g. bench press, squat"
           autocomplete="off"
         />
-        <div class="category-filters" id="categoryFilters"></div>
-        <div class="equipment-filters" id="equipmentFilters"></div>
+        <div class="filter-row">
+          <select id="categorySelect" onchange="setCategory(this.value)">
+            <option value="All">All Muscle Groups</option>
+          </select>
+          <select id="equipmentSelect" onchange="setEquipment(this.value)">
+            <option value="All">All Equipment</option>
+          </select>
+        </div>
       </section>
 
       <!-- Loading State -->
