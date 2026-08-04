@@ -185,8 +185,14 @@ function openDetail(id) {
   document.getElementById("detailEquipment").textContent =
     currentDetail.equipment;
   document.getElementById("detailTarget").textContent = currentDetail.target;
-  document.getElementById("detailInstructions").textContent =
-    currentDetail.instructions.en;
+  const stepsList = currentDetail.instruction_steps?.en;
+  if (stepsList && stepsList.length) {
+    document.getElementById("detailInstructions").innerHTML =
+      "<ol>" + stepsList.map((step) => `<li>${step}</li>`).join("") + "</ol>";
+  } else {
+    document.getElementById("detailInstructions").innerHTML =
+      `<p style="font-size:0.83rem; line-height:1.6; color:var(--text-light);">${currentDetail.instructions.en}</p>`;
+  }
 
   document.getElementById("detailOverlay").classList.add("active");
 }
