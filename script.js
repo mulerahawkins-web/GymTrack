@@ -236,6 +236,8 @@ function saveExerciseLog() {
     return;
   }
 
+  const isPR = checkForNewPR(currentDetail.name, { weight, reps, sets });
+
   todayLog.push({
     id: Date.now(),
     name: currentDetail.name,
@@ -248,7 +250,12 @@ function saveExerciseLog() {
   saveTodayLog();
   renderTodayLog();
   closeLogForm();
-  showToast(`✅ ${currentDetail.name} logged!`);
+
+  showToast(
+    isPR
+      ? `🏆 New PR! ${currentDetail.name}`
+      : `✅ ${currentDetail.name} logged!`,
+  );
 }
 
 function removeLogEntry(id) {
@@ -395,4 +402,169 @@ function loadSavedTheme() {
   if (savedTheme === "dark") {
     document.documentElement.setAttribute("data-theme", "dark");
   }
+}
+// ==============================
+// PERSONAL RECORDS & PROGRESS
+// ==============================
+
+function getFullHistory() {
+  return JSON.parse(localStorage.getItem("gymtrackHistory") || "{}");
+}
+
+function getExerciseEntries(name) {
+  const history = getFullHistory();
+  const entries = [];
+
+  Object.keys(history).forEach((date) => {
+    history[date].forEach((entry) => {
+      if (entry.name === name) entries.push({ ...entry, date });
+    });
+  });
+
+  entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+  return entries;
+}
+
+// Estimated 1-Rep Max (Epley formula) — or max reps for bodyweight moves
+function scoreEntry(entry) {
+  return entry.weight > 0 ? entry.weight * (1 + entry.reps / 30) : entry.reps;
+}
+
+function getPR(entries) {
+  if (!entries.length) return null;
+  let best = entries[0];
+  let bestScore = scoreEntry(best);
+
+  entries.forEach((e) => {
+    const score = scoreEntry(e);
+    if (score > bestScore) {
+      bestScore = score;
+      best = e;
+    }
+  });
+
+  return { entry: best, score: bestScore, isBodyweight: best.weight === 0 };
+}
+
+function checkForNewPR(name, newEntry) {
+  const priorEntries = getExerciseEntries(name);
+  if (!priorEntries.length) return true; // first time logging = automatic PR
+
+  const priorBest = getPR(priorEntries);
+  return scoreEntry(newEntry) > priorBest.score;
+}
+
+// ==============================
+// PERSONAL RECORDS LIST
+// ==============================
+function openPRs() {
+  renderPRsList();
+  document.getElementById("prsOverlay").classList.add("active");
+}
+
+function closePRs() {
+  document.getElementById("prsOverlay").classList.remove("active");
+}
+
+function handlePRsOverlayClick(e) {
+  if (e.target === document.getElementById("prsOverlay")) closePRs();
+}
+
+function renderPRsList() {
+  const history = getFullHistory();
+  const names = new Set();
+  Object.values(history).forEach((entries) =>
+    entries.forEach((e) => names.add(e.name)),
+  );
+
+  const list = document.getElementById("prsList");
+
+  if (!names.size) {
+    list.innerHTML =
+      '<p class="empty-log">No personal records yet — log your first exercise!</p>';
+    return;
+  }
+
+  const prs = [...names]
+    .map((name) => ({ name, pr: getPR(getExerciseEntries(name)) }))
+    .sort((a, b) => new Date(b.pr.entry.date) - new Date(a.pr.entry.date));
+
+  list.innerHTML = prs
+    .map(
+      ({ name, pr }) => `
+        <div class="pr-item" onclick="openProgress('${name}')">
+            <div>
+                <div class="pr-item-name">${name}</div>
+                <div class="pr-item-meta">${pr.entry.date}</div>
+            </div>
+            <div class="pr-badge">
+                ${pr.isBodyweight ? `${pr.entry.reps} reps` : `${pr.entry.weight}kg × ${pr.entry.reps}`}
+            </div>
+        </div>
+    `,
+    )
+    .join("");
+}
+
+// ==============================
+// EXERCISE PROGRESS VIEW
+// ==============================
+function openProgress(name) {
+  closeDetail();
+  closePRs();
+
+  const entries = getExerciseEntries(name);
+  const summaryEl = document.getElementById("progressPRSummary");
+  const listEl = document.getElementById("progressList");
+
+  document.getElementById("progressExerciseName").textContent = name;
+
+  if (!entries.length) {
+    summaryEl.innerHTML = "";
+    listEl.innerHTML =
+      '<p class="empty-log">No sessions logged yet for this exercise.</p>';
+    document.getElementById("progressOverlay").classList.add("active");
+    return;
+  }
+
+  const pr = getPR(entries);
+
+  summaryEl.innerHTML = `
+        <div class="pr-label">🏆 Personal Record</div>
+        <div class="pr-value">${pr.isBodyweight ? `${pr.entry.reps} reps` : `${pr.entry.weight}kg × ${pr.entry.reps}`}</div>
+        <div class="pr-date">${pr.entry.date}</div>
+    `;
+
+  const reversed = [...entries].reverse();
+
+  listEl.innerHTML = reversed
+    .map((entry) => {
+      const percent = Math.round((scoreEntry(entry) / pr.score) * 100);
+      const isPR = entry === pr.entry;
+
+      return `
+            <div class="progress-entry">
+                <div class="progress-entry-top">
+                    <span class="progress-entry-date">${entry.date}</span>
+                    <span class="progress-entry-value ${isPR ? "is-pr" : ""}">
+                        ${isPR ? "🏆 " : ""}${entry.sets} × ${entry.reps} ${entry.weight > 0 ? `@ ${entry.weight}kg` : ""}
+                    </span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" style="width:${percent}%"></div>
+                </div>
+            </div>
+        `;
+    })
+    .join("");
+
+  document.getElementById("progressOverlay").classList.add("active");
+}
+
+function closeProgress() {
+  document.getElementById("progressOverlay").classList.remove("active");
+}
+
+function handleProgressOverlayClick(e) {
+  if (e.target === document.getElementById("progressOverlay")) closeProgress();
 }

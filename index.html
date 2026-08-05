@@ -16,15 +16,13 @@
             <p>Exercise Library & Workout Logger</p>
           </div>
         </div>
-        <div class="header-actions">
-          <button class="history-btn" onclick="openHistory()">
-            📋 History
-          </button>
-          <div class="theme-switch" id="themeToggle" onclick="toggleDarkMode()">
-            <div class="switch-thumb"></div>
-          </div>
-        </div>
-      </div>
+      <div class="header-actions">
+                <button class="history-btn" onclick="openPRs()">🏆 PRs</button>
+                <button class="history-btn" onclick="openHistory()">📋 History</button>
+                <div class="theme-switch" id="themeToggle" onclick="toggleDarkMode()">
+                    <div class="switch-thumb"></div>
+                </div>
+            </div>
     </header>
 
     <main>
@@ -88,10 +86,11 @@
         </div>
         <h3>Instructions</h3>
         <div id="detailInstructions"></div>
-        <p class="attribution">Media © Gym visual — gymvisual.com</p>
-        <button class="log-btn" onclick="openLogForm()">
-          + Log This Exercise
-        </button>
+      <p class="attribution">Media © Gym visual — gymvisual.com</p>
+            <div class="detail-actions">
+                <button class="progress-btn" onclick="openProgress(currentDetail.name)">📈 Progress</button>
+                <button class="log-btn" onclick="openLogForm()">+ Log This Exercise</button>
+            </div>
       </div>
     </div>
 
@@ -159,7 +158,24 @@
         <div id="historyList"></div>
       </div>
     </div>
+<!-- Personal Records Modal -->
+    <div class="modal-overlay" id="prsOverlay" onclick="handlePRsOverlayClick(event)">
+        <div class="modal prs-modal">
+            <h2>🏆 Personal Records</h2>
+            <div id="prsList"></div>
+        </div>
+    </div>
 
+    <!-- Exercise Progress Modal -->
+    <div class="modal-overlay" id="progressOverlay" onclick="handleProgressOverlayClick(event)">
+        <div class="modal progress-modal">
+            <button class="close-modal-btn" onclick="closeProgress()">✕</button>
+            <h2 id="progressExerciseName"></h2>
+            <div id="progressPRSummary"></div>
+            <h3>Session History</h3>
+            <div id="progressList"></div>
+        </div>
+    </div>
     <div class="toast" id="toast"></div>
 
     <footer>
