@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .addEventListener("input", applyFilters);
   loadExercises();
   loadTodayLog();
+  loadSavedTheme();
 });
 
 // ==============================
@@ -373,4 +374,25 @@ function showToast(message) {
   toast.textContent = message;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 2500);
+}
+// ==============================
+// DARK MODE
+// ==============================
+function toggleDarkMode() {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+
+  if (currentTheme === "dark") {
+    document.documentElement.removeAttribute("data-theme");
+    localStorage.setItem("gymtrackTheme", "light");
+  } else {
+    document.documentElement.setAttribute("data-theme", "dark");
+    localStorage.setItem("gymtrackTheme", "dark");
+  }
+}
+
+function loadSavedTheme() {
+  const savedTheme = localStorage.getItem("gymtrackTheme");
+  if (savedTheme === "dark") {
+    document.documentElement.setAttribute("data-theme", "dark");
+  }
 }

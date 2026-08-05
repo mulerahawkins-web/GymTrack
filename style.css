@@ -63,6 +63,12 @@ header {
   margin-top: 2px;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .history-btn {
   background: rgba(245, 166, 35, 0.1);
   border: 1px solid rgba(245, 166, 35, 0.3);
@@ -78,6 +84,40 @@ header {
 
 .history-btn:hover {
   background: rgba(245, 166, 35, 0.18);
+}
+
+/* Toggle Switch */
+.theme-switch {
+  width: 48px;
+  height: 26px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  transition: background 0.35s ease;
+  flex-shrink: 0;
+}
+
+.switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.35s ease;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .theme-switch {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .switch-thumb {
+  transform: translateX(22px);
 }
 
 /* Main */
@@ -585,4 +625,69 @@ footer {
   .log-row {
     grid-template-columns: 1fr;
   }
+}
+/* ===== DARK MODE ===== */
+[data-theme="dark"] {
+  --bg: #0a0a0f;
+  --card: #16171f;
+  --text: #f1f5f9;
+  --text-light: #8b8f9c;
+  --border: #262832;
+  --shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .exercise-card img {
+  background: #1e1f28;
+}
+
+[data-theme="dark"] .exercise-card-meta {
+  color: #8b8f9c;
+}
+
+[data-theme="dark"] .filter-row select,
+[data-theme="dark"] #exerciseSearch {
+  background: #1e1f28;
+  color: var(--text);
+  border-color: #262832;
+}
+
+[data-theme="dark"] .modal {
+  background: #16171f;
+  color: var(--text);
+}
+
+[data-theme="dark"] .close-modal-btn {
+  background: #1e1f28;
+  color: var(--text);
+}
+
+[data-theme="dark"] .tag {
+  background: #1e1f28;
+  color: #8b8f9c;
+}
+
+[data-theme="dark"] .input-group input {
+  background: #1e1f28;
+  color: var(--text);
+  border-color: #262832;
+}
+
+[data-theme="dark"] .load-more-btn {
+  background: #16171f;
+  border-color: #262832;
+  color: var(--text);
+}
+
+[data-theme="dark"] .workout-log-item,
+[data-theme="dark"] .history-day {
+  border-color: #262832;
+}
+
+[data-theme="dark"] .clear-btn {
+  border-color: #262832;
+}
+
+[data-theme="dark"] .detail-gif {
+  background: #1e1f28;
+  border-color: #262832;
 }
