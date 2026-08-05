@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   loadExercises();
   loadTodayLog();
   loadSavedTheme();
+  registerServiceWorker();
 });
 
 // ==============================
@@ -567,4 +568,19 @@ function closeProgress() {
 
 function handleProgressOverlayClick(e) {
   if (e.target === document.getElementById("progressOverlay")) closeProgress();
+}
+// ==============================
+// PWA — SERVICE WORKER REGISTRATION
+// ==============================
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("./sw.js")
+      .then(() =>
+        console.log(
+          "✅ Service worker registered — GymTrack can work offline!",
+        ),
+      )
+      .catch((err) => console.log("Service worker registration failed:", err));
+  }
 }
