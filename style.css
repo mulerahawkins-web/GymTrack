@@ -468,9 +468,9 @@ main {
 }
 
 .log-row {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   margin-bottom: 20px;
 }
 
@@ -487,11 +487,11 @@ main {
   text-transform: uppercase;
 }
 
-.input-group input {
-  padding: 10px;
+.log-modal .input-group input {
+  padding: 12px 14px;
   border: 1.5px solid var(--border);
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   font-family: inherit;
 }
 
