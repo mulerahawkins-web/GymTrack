@@ -6,7 +6,13 @@ const filesToCache = [
   "./style.css",
   "./script.js",
   "./manifest.json",
+  "./icon-72.png",
+  "./icon-96.png",
+  "./icon-128.png",
+  "./icon-144.png",
+  "./icon-152.png",
   "./icon-192.png",
+  "./icon-384.png",
   "./icon-512.png",
 ];
 
@@ -38,8 +44,14 @@ self.addEventListener("fetch", (event) => {
     return;
   }
   event.respondWith(
-    caches
-      .match(event.request)
-      .then((cachedResponse) => cachedResponse || fetch(event.request)),
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.match(event.request).then((cachedResponse) => {
+        const fetchPromise = fetch(event.request).then((networkResponse) => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        });
+        return cachedResponse || fetchPromise;
+      });
+    }),
   );
 });
