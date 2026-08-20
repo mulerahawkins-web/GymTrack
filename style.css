@@ -7,7 +7,7 @@
 :root {
   --primary: #14161f;
   --accent: #f5a623;
-  --bg: #f4f4f6;
+  --bg: #f7f7f8;
   --card: #ffffff;
   --text: #1a1a2e;
   --text-light: #6b7280;
@@ -209,7 +209,7 @@ main {
 .exercise-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
@@ -217,10 +217,16 @@ main {
   background: var(--card);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: none;
   cursor: pointer;
-  transition: transform 0.15s;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+}
+
+.exercise-card:hover {
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
 }
 
 .exercise-card:hover {

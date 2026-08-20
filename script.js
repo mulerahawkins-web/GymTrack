@@ -8,7 +8,7 @@ const MEDIA_BASE =
 
 let allExercises = [];
 let filteredExercises = [];
-let visibleCount = 16;
+let visibleCount = 12;
 let selectedCategory = "All";
 let selectedEquipment = "All";
 let currentDetail = null;
@@ -128,7 +128,7 @@ function applyFilters() {
     return matchesQuery && matchesCategory && matchesEquipment;
   });
 
-  visibleCount = 16;
+  visibleCount = 12;
   renderGrid();
 }
 
