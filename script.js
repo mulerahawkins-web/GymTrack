@@ -166,11 +166,21 @@ function renderGrid() {
 
   loadMoreBtn.style.display =
     visibleCount < filteredExercises.length ? "block" : "none";
+  document.getElementById("showLessBtn").style.display =
+    visibleCount > 8 ? "block" : "none";
 }
 
 function loadMore() {
-  visibleCount += 30;
+  visibleCount += 8;
   renderGrid();
+}
+
+function showLess() {
+  visibleCount = 8;
+  renderGrid();
+  document
+    .querySelector(".search-section")
+    .scrollIntoView({ behavior: "smooth" });
 }
 
 // ==============================
