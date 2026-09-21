@@ -31,8 +31,11 @@ jobs:
       - name: Install Bubblewrap
         run: npm install --global @bubblewrap/cli
 
+      - name: Configure Bubblewrap tool paths
+        run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+
       - name: Validate the deployed PWA
-        run: printf 'n\n' | bubblewrap validate --url=https://mulerahawkins-web.github.io/GymTrack/
+        run: bubblewrap validate --url=https://mulerahawkins-web.github.io/GymTrack/
 
       - name: Create Android project directory
         run: mkdir android
@@ -47,7 +50,7 @@ jobs:
 
       - name: Build the APK
         working-directory: android
-        run: printf 'n\n' | bubblewrap build --manifest=twa-manifest.json --skipPwaValidation --skipSigning
+        run: bubblewrap build --manifest=twa-manifest.json --skipPwaValidation --skipSigning
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
