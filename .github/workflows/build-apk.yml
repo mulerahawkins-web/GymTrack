@@ -1,0 +1,56 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Validate the deployed PWA
+        run: npm run apk:validate
+
+      - name: Install Bubblewrap
+        run: npm install --global @bubblewrap/cli
+
+      - name: Create Android project directory
+        run: mkdir android
+
+      - name: Initialize the Android project
+        working-directory: android
+        run: |
+          yes "" | bubblewrap init \
+            --manifest "https://mulerahawkins-web.github.io/GymTrack/manifest.json" \
+            --directory .
+          cp ../twa-manifest.json ./twa-manifest.json
+
+      - name: Build the APK
+        working-directory: android
+        run: bubblewrap build --manifest=twa-manifest.json --skipPwaValidation --skipSigning
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: gymtrack-apk
+          path: android/app-release*.apk
+          if-no-files-found: error

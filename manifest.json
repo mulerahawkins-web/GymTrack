@@ -4,7 +4,7 @@
     "name": "GymTrack - Exercise Library & Workout Logger",
     "short_name": "GymTrack",
     "description": "Browse over 1,300 exercises, log your sets, reps and weights, and track personal records with GymTrack.",
-    "start_url": "/GymTrack/index.html",
+    "start_url": "/GymTrack/",
     "scope": "/GymTrack/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
@@ -30,7 +30,7 @@
             "name": "Browse Exercises",
             "short_name": "Browse",
             "description": "Jump straight to searching exercises",
-            "url": "/GymTrack/index.html",
+            "url": "/GymTrack/",
             "icons": [{ "src": "/GymTrack/icon-192.png", "sizes": "192x192" }]
         }
     ]

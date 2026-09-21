@@ -1,0 +1,10 @@
+{
+  "name": "gymtrack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GymTrack progressive web app and Android Trusted Web Activity build",
+  "scripts": {
+    "apk:validate": "npx --yes @bubblewrap/cli validate --url=https://mulerahawkins-web.github.io/GymTrack/",
+    "apk:build": "npx --yes @bubblewrap/cli build --manifest=twa-manifest.json --skipPwaValidation"
+  }
+}

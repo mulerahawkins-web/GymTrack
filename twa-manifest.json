@@ -1,0 +1,21 @@
+{
+  "packageId": "io.github.mulerahawkins_web.gymtrack.twa",
+  "host": "mulerahawkins-web.github.io",
+  "startUrl": "/GymTrack/",
+  "iconUrl": "https://mulerahawkins-web.github.io/GymTrack/icon-512.png",
+  "maskableIconUrl": "https://mulerahawkins-web.github.io/GymTrack/icon-512.png",
+  "name": "GymTrack",
+  "launcherName": "GymTrack",
+  "display": "standalone",
+  "themeColor": "#14161f",
+  "navigationColor": "#14161f",
+  "navigationColorDark": "#14161f",
+  "backgroundColor": "#14161f",
+  "orientation": "portrait",
+  "webManifestUrl": "https://mulerahawkins-web.github.io/GymTrack/manifest.json",
+  "fallbackType": "customtabs",
+  "enableNotifications": false,
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "signingMode": "none"
+}
