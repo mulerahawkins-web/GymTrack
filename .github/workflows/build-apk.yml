@@ -28,11 +28,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: Validate the deployed PWA
-        run: npm run apk:validate
-
       - name: Install Bubblewrap
         run: npm install --global @bubblewrap/cli
+
+      - name: Validate the deployed PWA
+        run: printf 'n\n' | bubblewrap validate --url=https://mulerahawkins-web.github.io/GymTrack/
 
       - name: Create Android project directory
         run: mkdir android
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build the APK
         working-directory: android
-        run: bubblewrap build --manifest=twa-manifest.json --skipPwaValidation --skipSigning
+        run: printf 'n\n' | bubblewrap build --manifest=twa-manifest.json --skipPwaValidation --skipSigning
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
