@@ -32,7 +32,10 @@ jobs:
         run: npm install --global @bubblewrap/cli
 
       - name: Configure Bubblewrap tool paths
-        run: bubblewrap updateConfig --jdkPath="$JAVA_HOME" --androidSdkPath="$ANDROID_HOME"
+        run: |
+          mkdir -p "$HOME/.bubblewrap"
+          printf '{ "jdkPath": "%s", "androidSdkPath": "%s" }\n' \
+            "$JAVA_HOME" "${ANDROID_HOME:-}" > "$HOME/.bubblewrap/config.json"
 
       - name: Validate the deployed PWA
         run: bubblewrap validate --url=https://mulerahawkins-web.github.io/GymTrack/
