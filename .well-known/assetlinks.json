@@ -1,18 +1,8 @@
-[
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "io.github.mulerahawkins_web.twa",
-      "sha256_cert_fingerprints": ["EA:BC:FA:E5:CF:FF:AC:46:ED:D4:3E:58:93:D3:E5:96:C8:4A:B9:E0:F9:7B:A3:D5:1C:08:08:AB:87:60:B4:10"]
-    }
-  },
-  {
-    "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "io.github.mulerahawkins_web.gymtrack.twa",
-      "sha256_cert_fingerprints": ["8E:DA:A6:93:0D:54:8C:4B:D8:2B:BF:9E:C7:0E:7C:EA:81:E7:B4:4C:0E:28:22:6D:AA:D4:CB:11:C7:2C:FF:5F"]
-    }
-  }
-]
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.mulerahawkins_web.twa",
+        "sha256_cert_fingerprints": ["70:EE:F3:A9:93:CE:C4:44:3C:96:A4:53:96:4F:43:77:D6:3B:55:C7:21:E9:42:86:5F:1D:45:A8:3C:E4:17:0E"]
+      }
+    }]
